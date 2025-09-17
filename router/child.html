@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hiệu Sách Mini</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="brand">📚 Hiệu Sách Mini</div>
+    <nav>
+         <!-- Thanh tìm kiếm đặt đầu tiên -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm sách..." />
+      <button onclick="searchBooks()">🔍</button>
+    </div>
+      <a href="child.html" id="nav-home">Trang chủ</a>
+      <a href="cart.html" id="nav-cart">Giỏ hàng (<span id="cart-count">0</span>)</a>
+      <a href="about.html" class="nav-link">Giới thiệu</a>
+      <!-- Thể loại có menu con -->
+      <div class="dropdown">
+        <a href="#/category" id="nav-category">Thể loại ▾</a>
+        <div class="dropdown-content">
+          <a href="congnghe.html">📘 Công nghệ</a>
+          <a href="vanhoc.html">📖 Văn học</a>
+          <a href="kinhte.html">💼 Kinh tế</a>
+          <a href="thieunhi.html">👶 Thiếu nhi</a>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="container">
+    <div id="view"></div>
+  </main>
+
+  <footer class="footer bg-gray-200 text-gray-800 text-center py-6 mt-8">
+    <p class="font-semibold">© 2025 Hiệu Sách Mini — Demo tối giản bán & đọc ebook</p>
+
+    <div class="mt-2">
+      <p>
+        <strong>Đơn vị:</strong>
+        <a href="https://www.google.com/maps/place/Cao+%C4%90%E1%BA%B3ng+C%C3%B4ng+Ngh%E1%BB%87+Th%C3%B4ng+Tin+TP.HCM/@10.7750549,106.6319191,857m/data=!3m2!1e3!4b1!4m6!3m5!1s0x31752ea144839ef1:0x798819bdcd0522b0!8m2!3d10.7750496!4d106.6344994!16s%2Fg%2F1v6wltsg?entry=ttu&g_ep=EgoyMDI1MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          target="_blank" class="underline hover:text-blue-600">
+          Trường Cao đẳng Công nghệ Thông tin (ITC)
+        </a>
+      </p>
+      <p><strong>Người thực hiện:</strong> Nguyễn Lê Thái An</p>
+    </div>
+
+    <div class="mt-2">
+      <p><strong>Liên hệ:</strong></p>
+      <p>📞 0984 499 074</p>
+      <p>✉️ <a href="mailto:annguyengocong2@gmail.com"
+          class="underline hover:text-blue-600">annguyengocong2@gmail.com</a></p>
+    </div>
+  </footer>
+
+
+  <script>
+    /**
+     * DỮ LIỆU MẪU —  có thể thay thế bằng API/backend sau này
+     * Đặt file PDF thật vào thư mục /ebooks/ tương ứng (vd: ebooks/book1.pdf)
+     */
+    const BOOKS = [
+      { id: 1, title: 'Lập Trình Tối Giản', author: 'N. Dev', price: 59000, type: 'ebook', cover: 'anh/2.jpg', pdf: 'ebooks/book1.pdf', description: 'Hướng dẫn viết code gọn nhẹ và hiệu quả.' },
+      { id: 2, title: 'kỹ năng mềm', author: 'T. Soft', price: 79000, type: 'ebook', cover: 'anh/1.png', pdf: 'ebooks/book2.pdf', description: 'Giao tiếp, thuyết trình, làm việc nhóm cho người mới.' },
+      { id: 3, title: 'Những đêm mưa', author: 'L. Văn', price: 69000, type: 'ebook', cover: 'anh/4.png', pdf: 'ebooks/book3.pdf', description: 'Tuyển tập truyện ngắn cảm xúc.' },
+      { id: 4, title: 'Công nghiệp môi trường', author: 'T. Soft', price: 59000, type: 'ebook', cover: 'anh/3.png', pdf: 'ebooks/book4.pdf', description: 'Giao tiếp, thuyết trình, làm việc nhóm cho người mới.' },
+      { id: 5, title: 'The Pragmatic Programme', author: 'L. Văn', price: 69000, type: 'ebook', cover: 'anh/5.png', pdf: 'ebooks/book5.pdf', description: 'Tuyển tập truyện ngắn cảm xúc.' },
+      { id: 6, title: 'Clean Code', author: 'T. Soft', price: 59000, type: 'ebook', cover: 'anh/6.png', pdf: 'ebooks/book6.pdf', description: 'Giao tiếp, thuyết trình, làm việc nhóm cho người mới.' },
+      { id: 7, title: 'Lập Trình JavaScript Cơ Bản', author: 'N. Code', price: 69000, type: 'ebook', cover: 'anh/7.png', pdf: 'ebooks/book7.pdf', description: 'Học cú pháp, hàm, và cách xây dựng ứng dụng web với JavaScript.' },
+      { id: 8, title: 'Artificial Intelligence', author: 'H. Design', price: 75000, type: 'ebook', cover: 'anh/8.png', pdf: 'ebooks/book8.pdf', description: 'Nguyên tắc UI/UX và thực hành với HTML, CSS, Tailwind.' },
+      { id: 9, title: 'Phân Tích Dữ Liệu Với Python', author: 'D. Data', price: 85000, type: 'ebook', cover: 'anh/9.png', pdf: 'ebooks/book9.pdf', description: 'Khám phá Pandas, NumPy và trực quan hóa dữ liệu bằng Matplotlib.' },
+      { id: 10, title: 'Trí Tuệ Nhân Tạo Ứng Dụng', author: 'A. Smart', price: 99000, type: 'ebook', cover: 'anh/10.png', pdf: 'ebooks/book10.pdf', description: 'Cơ bản về AI, machine learning và cách ứng dụng trong thực tế.' }
+    ];
+
+    // Helpers
+    const $ = (sel, el = document) => el.querySelector(sel);
+    const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+    const money = v => v.toLocaleString('vi-VN') + '₫';
+
+    // LocalStorage state
+    const load = (k, def) => { try { return JSON.parse(localStorage.getItem(k)) ?? def; } catch { return def; } };
+    const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+    const state = {
+      cart: load('cart', []), // [{id, qty}]
+      purchases: load('purchases', []) // [bookId]
+    };
+
+    function sync() {
+      save('cart', state.cart);
+      save('purchases', state.purchases);
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const count = state.cart.reduce((s, i) => s + i.qty, 0);
+      $('#cart-count').textContent = count;
+    }
+
+
+
+
+    // Views
+    function renderHome() {
+      const view = $('#view');
+      view.innerHTML = `<div class="row" style="justify-content:space-between; align-items: end; margin-bottom: 14px;">
+          <div>
+            <h2 style="margin:6px 0 4px">Mới cập nhật</h2>
+            <div class="muted">Danh sách ebook có thể đọc online sau khi mua</div>
+          </div>
+        </div>
+        <div class="grid">${BOOKS.map(b => `
+          <div class="card">
+            <img src="${b.cover}" alt="${b.title}" />
+            <div class="title">${b.title}</div>
+            <div class="muted">${b.author}</div>
+            <div class="row" style="justify-content:space-between; margin-top:6px;">
+              <div class="price">${money(b.price)}</div>
+              <span class="tag">${b.type.toUpperCase()}</span>
+            </div>
+            <div class="row" style="margin-top:10px;">
+              <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+              <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
+            </div>
+          </div>
+        `).join('')}</div>`;
+      setActive('#/home');
+    }
+
+    function renderDetail(id) {
+      const view = $('#view');
+      const b = BOOKS.find(x => x.id == id);
+      if (!b) { view.innerHTML = `<div class="empty panel">Không tìm thấy sách.</div>`; return; }
+
+      const owned = state.purchases.includes(b.id);
+      view.innerHTML = `
+        <div class="panel detail">
+          <div><img src="${b.cover}" alt="${b.title}" style="width:100%; border-radius:16px;"></div>
+          <div>
+            <h2 style="margin:0 0 6px">${b.title}</h2>
+            <div class="muted" style="margin-bottom:10px;">Tác giả: ${b.author}</div>
+            <p class="muted" style="line-height:1.6">${b.description}</p>
+
+            <div class="row" style="margin:14px 0 8px; align-items: center;">
+              <div class="price" style="font-size:18px;">${money(b.price)}</div>
+              <span class="tag">${b.type.toUpperCase()}</span>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+              ${owned ? `<a class="btn secondary" href="#/reader/${b.id}">Đọc ngay</a>` : `<button class="btn secondary" onclick="alert('Mua sách để đọc online nhé!');">Đọc thử (khóa)</button>`}
+              <a class="btn secondary" href="#/home">← Quay lại</a>
+            </div>
+          </div>
+        </div>
+      `;
+      setActive();
+    }
+
+    
+
+    // Tiny router
+    function router() {
+      const hash = location.hash || '#/home';
+      const [_, route, param] = hash.split('/');
+      switch (route) {
+        case 'home': renderHome(); break;
+        case 'detail': renderDetail(param); break;
+        case 'cart': renderCart(); break;
+        case 'reader': renderReader(param); break;
+        default: renderHome();
+      }
+    }
+
+    function setActive(target) {
+      $$('#nav-home, #nav-cart').forEach(a => a.classList.remove('active'));
+      if (target) $(target === '#/cart' ? '#nav-cart' : '#nav-home').classList.add('active');
+    }
+
+    window.addEventListener('hashchange', router);
+    updateCartCount();
+    router();
+
+  </script>
+  <!-- Import JS tách riêng -->
+  <script src="js/books.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+
+</html>

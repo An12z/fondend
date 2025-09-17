@@ -1,0 +1,26 @@
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.search-box input {
+  border: none;
+  padding: 6px 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-box button {
+  background: #2563eb; /* xanh dương */
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: #1e40af;
+}
