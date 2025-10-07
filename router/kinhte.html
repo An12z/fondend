@@ -10,16 +10,24 @@
 
 <body>
   <header>
-   <div class="brand">📚 Hiệu Sách Mini</div>
-    <nav>
-         <!-- Thanh tìm kiếm đặt đầu tiên -->
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Tìm sách..." />
-      <button onclick="searchBooks()">🔍</button>
-    </div>
+    <div class="brand">📚 Hiệu Sách Mini</div>
+
+    <!-- Nút menu chỉ hiện khi ở mobile -->
+    <button class="menu-toggle" id="menuToggle">
+      ☰
+    </button>
+
+    <nav id="navMenu">
+      <!-- Thanh tìm kiếm -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Tìm sách..." oninput="searchBooks()" />
+        <button type="button" onclick="searchBooks()">🔍</button>
+      </div>
+
       <a href="child.html" id="nav-home">Trang chủ</a>
       <a href="cart.html" id="nav-cart">Giỏ hàng (<span id="cart-count">0</span>)</a>
       <a href="about.html" class="nav-link">Giới thiệu</a>
+
       <!-- Thể loại có menu con -->
       <div class="dropdown">
         <a href="#/category" id="nav-category">Thể loại ▾</a>
@@ -30,9 +38,9 @@
           <a href="thieunhi.html">👶 Thiếu nhi</a>
         </div>
       </div>
-
     </nav>
   </header>
+
 
   <main class="container">
     <div id="view"></div>
@@ -67,17 +75,17 @@
      * Đặt file PDF thật vào thư mục /ebooks/ tương ứng (vd: ebooks/book1.pdf)
      */
     const BOOKS = [
-  { id: 1, title: 'Kinh Tế Học Vĩ Mô', author: 'P. Samuelson', price: 120000, type: 'ebook', cover: 'anh/11.png', pdf: 'ebooks/econ1.pdf', description: 'Nguyên lý cơ bản về tăng trưởng, lạm phát và thất nghiệp.' },
-  { id: 2, title: 'Tư Bản Luận', author: 'Karl Marx', price: 150000, type: 'ebook', cover: 'anh/12.png', pdf: 'ebooks/econ2.pdf', description: 'Phân tích về sản xuất hàng hóa, giá trị thặng dư và kinh tế chính trị.' },
-  { id: 3, title: 'Quốc Gia Khởi Nghiệp', author: 'Dan Senor & Saul Singer', price: 135000, type: 'ebook', cover: 'anh/13.png', pdf: 'ebooks/econ3.pdf', description: 'Khám phá mô hình kinh tế và tinh thần khởi nghiệp của Israel.' },
-  { id: 4, title: 'Kinh Tế Học Vi Mô', author: 'Hal R. Varian', price: 110000, type: 'ebook', cover: 'anh/14.png', pdf: 'ebooks/econ4.pdf', description: 'Cung, cầu, thị trường và hành vi người tiêu dùng.' },
-  { id: 5, title: 'Tư Duy Nhanh Và Chậm', author: 'Daniel Kahneman', price: 140000, type: 'ebook', cover: 'anh/15.png', pdf: 'ebooks/econ5.pdf', description: 'Kinh tế học hành vi và cách con người ra quyết định.' },
-  { id: 6, title: 'Cha Giàu Cha Nghèo', author: 'Robert T. Kiyosaki', price: 95000, type: 'ebook', cover: 'anh/16.png', pdf: 'ebooks/econ6.pdf', description: 'Bài học tài chính cá nhân và tư duy về tiền bạc.' },
-  { id: 7, title: 'Nguyên Lý Kinh Tế Học', author: 'N. Gregory Mankiw', price: 160000, type: 'ebook', cover: 'anh/17.png', pdf: 'ebooks/econ7.pdf', description: 'Giới thiệu toàn diện về các nguyên lý kinh tế học hiện đại.' },
-  { id: 8, title: 'Sự Giàu Có Của Các Quốc Gia', author: 'Adam Smith', price: 145000, type: 'ebook', cover: 'anh/18.png', pdf: 'ebooks/econ8.pdf', description: 'Tác phẩm kinh điển khai sinh kinh tế học hiện đại.' },
-  { id: 9, title: 'Kinh Tế Học Hành Vi', author: 'Richard H. Thaler', price: 125000, type: 'ebook', cover: 'anh/19.png', pdf: 'ebooks/econ9.pdf', description: 'Phân tích tâm lý trong hành vi kinh tế và thị trường.' },
-  { id: 10, title: '21 Bài Học Cho Thế Kỷ 21', author: 'Yuval Noah Harari', price: 135000, type: 'ebook', cover: 'anh/20.png', pdf: 'ebooks/econ10.pdf', description: 'Những vấn đề kinh tế, chính trị và xã hội trong thời đại mới.' }
-];
+      { id: 1, title: 'Kinh Tế Học Vĩ Mô', author: 'P. Samuelson', price: 120000, type: 'ebook', cover: 'anh/11.png', pdf: 'ebooks/econ1.pdf', description: 'Nguyên lý cơ bản về tăng trưởng, lạm phát và thất nghiệp.' },
+      { id: 2, title: 'Tư Bản Luận', author: 'Karl Marx', price: 150000, type: 'ebook', cover: 'anh/12.png', pdf: 'ebooks/econ2.pdf', description: 'Phân tích về sản xuất hàng hóa, giá trị thặng dư và kinh tế chính trị.' },
+      { id: 3, title: 'Quốc Gia Khởi Nghiệp', author: 'Dan Senor & Saul Singer', price: 135000, type: 'ebook', cover: 'anh/13.png', pdf: 'ebooks/econ3.pdf', description: 'Khám phá mô hình kinh tế và tinh thần khởi nghiệp của Israel.' },
+      { id: 4, title: 'Kinh Tế Học Vi Mô', author: 'Hal R. Varian', price: 110000, type: 'ebook', cover: 'anh/14.png', pdf: 'ebooks/econ4.pdf', description: 'Cung, cầu, thị trường và hành vi người tiêu dùng.' },
+      { id: 5, title: 'Tư Duy Nhanh Và Chậm', author: 'Daniel Kahneman', price: 140000, type: 'ebook', cover: 'anh/15.png', pdf: 'ebooks/econ5.pdf', description: 'Kinh tế học hành vi và cách con người ra quyết định.' },
+      { id: 6, title: 'Cha Giàu Cha Nghèo', author: 'Robert T. Kiyosaki', price: 95000, type: 'ebook', cover: 'anh/16.png', pdf: 'ebooks/econ6.pdf', description: 'Bài học tài chính cá nhân và tư duy về tiền bạc.' },
+      { id: 7, title: 'Nguyên Lý Kinh Tế Học', author: 'N. Gregory Mankiw', price: 160000, type: 'ebook', cover: 'anh/17.png', pdf: 'ebooks/econ7.pdf', description: 'Giới thiệu toàn diện về các nguyên lý kinh tế học hiện đại.' },
+      { id: 8, title: 'Sự Giàu Có Của Các Quốc Gia', author: 'Adam Smith', price: 145000, type: 'ebook', cover: 'anh/18.png', pdf: 'ebooks/econ8.pdf', description: 'Tác phẩm kinh điển khai sinh kinh tế học hiện đại.' },
+      { id: 9, title: 'Kinh Tế Học Hành Vi', author: 'Richard H. Thaler', price: 125000, type: 'ebook', cover: 'anh/19.png', pdf: 'ebooks/econ9.pdf', description: 'Phân tích tâm lý trong hành vi kinh tế và thị trường.' },
+      { id: 10, title: '21 Bài Học Cho Thế Kỷ 21', author: 'Yuval Noah Harari', price: 135000, type: 'ebook', cover: 'anh/20.png', pdf: 'ebooks/econ10.pdf', description: 'Những vấn đề kinh tế, chính trị và xã hội trong thời đại mới.' }
+    ];
 
     // Helpers
     const $ = (sel, el = document) => el.querySelector(sel);
@@ -125,14 +133,16 @@
               <div class="price">${money(b.price)}</div>
               <span class="tag">${b.type.toUpperCase()}</span>
             </div>
-            <div class="row" style="margin-top:10px;">
-              <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
-              <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
-            </div>
+            <div class="product-actions">
+        <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+        <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
+      </div>
           </div>
         `).join('')}</div>`;
       setActive('#/home');
     }
+
+
 
     function renderDetail(id) {
       const view = $('#view');
@@ -253,6 +263,42 @@
     window.addEventListener('hashchange', router);
     updateCartCount();
     router();
+    // Search
+    function searchBooks() {
+      const keyword = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+      const view = document.getElementById('view');
+      if (!keyword) { renderHome(); return; }
+
+      const results = BOOKS.filter(b =>
+        b.title.toLowerCase().includes(keyword) ||
+        b.author.toLowerCase().includes(keyword)
+      );
+
+      if (results.length === 0) {
+        view.innerHTML = `<div class="panel empty">Không tìm thấy sách nào với từ khóa "${keyword}".</div>`;
+        return;
+      }
+
+      view.innerHTML = `<div style="margin-bottom:12px;"><h2>Kết quả tìm kiếm (${results.length})</h2></div>
+          <div class="grid">
+            ${results.map(b => `
+              <div class="card">
+                <img src="${b.cover}" alt="${b.title}">
+                <div class="title">${b.title}</div>
+                <div class="muted">${b.author}</div>
+                <div class="row" style="justify-content:space-between; margin-top:6px;">
+                  <div class="price">${money(b.price)}</div>
+                  <span class="tag">${b.type.toUpperCase()}</span>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                  <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+                  <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+    }
 
   </script>
   <!-- Import JS tách riêng -->
@@ -260,6 +306,14 @@
   <script src="js/cart.js"></script>
   <script src="js/app.js"></script>
 
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+  </script>
 </body>
 
 </html>

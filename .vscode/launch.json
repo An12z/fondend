@@ -4,12 +4,11 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open child.html",
-            "file": "d:\\fondend\\router\\child.html"
+            "name": "Open about.html",
+            "file": "d:\\thaian\\router\\child.html"
         }
     ]
 }

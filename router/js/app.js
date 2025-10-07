@@ -5,16 +5,52 @@
   const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
   const money = v => v.toLocaleString('vi-VN') + '₫';
 
-  // --- Views ---
-  function renderHome() {
-    const view = $('#view');
-    view.innerHTML = `<div class="row" style="justify-content:space-between; align-items: end; margin-bottom: 14px;">
-        <div>
-          <h2 style="margin:6px 0 4px">Mới cập nhật</h2>
-          <div class="muted">Danh sách ebook có thể đọc online</div>
+ function renderHome() {
+      const view = $('#view');
+      view.innerHTML = `<div class="row" style="justify-content:space-between; align-items: end; margin-bottom: 14px;">
+          <div>
+            <h2 style="margin:6px 0 4px">Mới cập nhật</h2>
+            <div class="muted">Danh sách ebook có thể đọc online sau khi mua</div>
+          </div>
         </div>
+        <div class="grid">${BOOKS.map(b => `
+          <div class="card">
+            <img src="${b.cover}" alt="${b.title}" />
+            <div class="title">${b.title}</div>
+            <div class="muted">${b.author}</div>
+            <div class="row" style="justify-content:space-between; margin-top:6px;">
+              <div class="price">${money(b.price)}</div>
+              <span class="tag">${b.type.toUpperCase()}</span>
+            </div>
+            <div class="product-actions">
+        <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+        <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
       </div>
-      <div class="grid">${BOOKS.map(b => `
+          </div>
+          
+        `).join('')}</div>`;
+      setActive('#/home');
+    }
+const BOOKS_PER_ROW = 4;
+const ROWS_TO_SHOW = 2;
+let booksToShow = BOOKS_PER_ROW; // hiển thị 1 hàng ban đầu (4 sách)
+
+// Hàm render trang chủ
+function renderHome() {
+  const view = document.getElementById('view');
+  const totalBooks = BOOKS.length;
+  const booksSlice = BOOKS.slice(0, booksToShow);
+
+  view.innerHTML = `
+    <div class="row" style="justify-content:space-between; align-items: end; margin-bottom: 14px;">
+      <div>
+        <h2 style="margin:6px 0 4px">Mới cập nhật</h2>
+        <div class="muted">Danh sách ebook có thể đọc online sau khi mua</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      ${booksSlice.map(b => `
         <div class="card">
           <img src="${b.cover}" alt="${b.title}" />
           <div class="title">${b.title}</div>
@@ -24,13 +60,33 @@
             <span class="tag">${b.type.toUpperCase()}</span>
           </div>
           <div class="row" style="margin-top:10px;">
+            <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
             <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
           </div>
         </div>
-      `).join('')}</div>`;
-    setActive('#/home');
+      `).join('')}
+    </div>
+
+    ${booksToShow < totalBooks ? `
+      <div style="text-align:center; margin:16px 0;">
+        <button id="load-more" class="btn">Xem thêm</button>
+      </div>
+    ` : ''}
+  `;
+
+  // Thêm sự kiện cho nút xem thêm
+  const loadMoreBtn = document.getElementById('load-more');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+      booksToShow += BOOKS_PER_ROW * ROWS_TO_SHOW; // load thêm 2 hàng
+      renderHome();
+    });
   }
 
+  setActive('#/home');
+}
+
+  
   function renderDetail(id) {
     const view = $('#view');
     const b = BOOKS.find(x => x.id == id);
@@ -93,6 +149,7 @@
     setActive();
   }
 
+  
   // Expose ra window
   window.renderHome = renderHome;
   window.renderDetail = renderDetail;
@@ -140,8 +197,5 @@ const results = window.BOOKS.filter(book =>
   book.category.toLowerCase().includes(keyword)
 );
 
-
-// lưu kết quả vào localStorage để hiển thị trên trang kết quả
-localStorage.setItem("searchResults", JSON.stringify(results));
 
 

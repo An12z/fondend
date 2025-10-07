@@ -1,35 +1,63 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🛒 Giỏ hàng - Hiệu Sách Mini</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header>
-    <div class="brand">📚 Hiệu Sách Mini</div>
-    <nav>
-      <a href="child.html">Trang chủ</a>
-      <a href="cart.html">Giỏ hàng (<span id="cart-count">0</span>)</a>
-      <a href="about.html">Giới thiệu</a>
-    </nav>
-  </header>
+  <!DOCTYPE html>
+  <html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Giỏ hàng - Hiệu Sách Mini</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="brand">📚 Hiệu Sách Mini</div>
+      <nav>
+        <a href="child.html">Trang chủ</a>
+        <a href="cart.html">Giỏ hàng (<span id="cart-count">0</span>)</a>
+        <a href="about.html">Giới thiệu</a>
+      </nav>
+    </header>
 
-  <main class="container">
-    <h2>🛒 Giỏ hàng</h2>
-    <div id="cart-list"></div>
-    <h3 id="cart-total"></h3>
-    <button class="btn" onclick="checkout()">Thanh toán</button>
-    <a class="btn secondary" href="child.html">← Tiếp tục mua sắm</a>
-  </main>
+    <main class="container">
+      <h2>🛒 Giỏ hàng</h2>
+      <div id="cart-list"></div>
+      <h3 id="cart-total"></h3>
+      <button class="btn" onclick="checkout()">Thanh toán</button>
+      <a class="btn secondary" href="child.html">← Tiếp tục mua sắm</a>
+      
+    </main>
 
-  <footer class="footer">
-    © 2025 Hiệu Sách Mini
-  </footer>
+    <footer class="footer">
+ <p class="font-semibold">© 2025 Hiệu Sách Mini — Demo tối giản bán & đọc ebook</p>
 
-  <!-- JS -->
-  <script src="js/books.js"></script>
-  <script src="js/cart.js"></script>
-</body>
-</html>
+    <div class="mt-2">
+      <p>
+        <strong>Đơn vị:</strong>
+        <a href="https://www.google.com/maps/place/Cao+%C4%90%E1%BA%B3ng+C%C3%B4ng+Ngh%E1%BB%87+Th%C3%B4ng+Tin+TP.HCM/@10.7750549,106.6319191,857m/data=!3m2!1e3!4b1!4m6!3m5!1s0x31752ea144839ef1:0x798819bdcd0522b0!8m2!3d10.7750496!4d106.6344994!16s%2Fg%2F1v6wltsg?entry=ttu&g_ep=EgoyMDI1MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          target="_blank" class="underline hover:text-blue-600">
+          Trường Cao đẳng Công nghệ Thông tin (ITC)
+        </a>
+      </p>
+      <p><strong>Người thực hiện:</strong> Nguyễn Lê Thái An</p>
+    </div>
+
+    <div class="mt-2">
+      <p><strong>Liên hệ:</strong></p>
+      <p>📞 0984 499 074</p>
+      <p>✉️ <a href="mailto:annguyengocong2@gmail.com"
+          class="underline hover:text-blue-600">annguyengocong2@gmail.com</a></p>
+    </div>
+    </footer>
+
+    <script>
+  const menuToggle = document.querySelector(".menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("open");
+  });
+</script>
+
+    <!-- JS -->
+    <script src="js/books.js"></script>
+    <script src="js/cart.js"></script>
+  </body>
+  </html>

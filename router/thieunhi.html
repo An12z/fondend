@@ -11,15 +11,23 @@
 <body>
   <header>
     <div class="brand">📚 Hiệu Sách Mini</div>
-    <nav>
-         <!-- Thanh tìm kiếm đặt đầu tiên -->
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Tìm sách..." />
-      <button onclick="searchBooks()">🔍</button>
-    </div>
+
+    <!-- Nút menu chỉ hiện khi ở mobile -->
+    <button class="menu-toggle" id="menuToggle">
+      ☰
+    </button>
+
+    <nav id="navMenu">
+      <!-- Thanh tìm kiếm -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Tìm sách..." oninput="searchBooks()" />
+        <button type="button" onclick="searchBooks()">🔍</button>
+      </div>
+
       <a href="child.html" id="nav-home">Trang chủ</a>
       <a href="cart.html" id="nav-cart">Giỏ hàng (<span id="cart-count">0</span>)</a>
       <a href="about.html" class="nav-link">Giới thiệu</a>
+
       <!-- Thể loại có menu con -->
       <div class="dropdown">
         <a href="#/category" id="nav-category">Thể loại ▾</a>
@@ -30,9 +38,9 @@
           <a href="thieunhi.html">👶 Thiếu nhi</a>
         </div>
       </div>
-
     </nav>
   </header>
+
 
   <main class="container">
     <div id="view"></div>
@@ -67,17 +75,17 @@
      * Đặt file PDF thật vào thư mục /ebooks/ tương ứng (vd: ebooks/book1.pdf)
      */
     const BOOKS = [
-  { id: 1, title: 'Hoàng Tử Bé', author: 'Antoine de Saint-Exupéry', price: 85000, type: 'ebook', cover: 'anh/21.png', pdf: 'ebooks/kid1.pdf', description: 'Câu chuyện cổ điển về tình bạn, tình yêu và cái nhìn trẻ thơ.' },
-  { id: 2, title: 'Alice Ở Xứ Sở Thần Tiên', author: 'Lewis Carroll', price: 90000, type: 'ebook', cover: 'anh/22.png', pdf: 'ebooks/kid2.pdf', description: 'Hành trình kỳ ảo của Alice khi rơi vào thế giới thần tiên.' },
-  { id: 3, title: 'Harry Potter Và Hòn Đá Phù Thủy', author: 'J.K. Rowling', price: 120000, type: 'ebook', cover: 'anh/23.png', pdf: 'ebooks/kid3.pdf', description: 'Cuốn đầu tiên trong series Harry Potter nổi tiếng toàn cầu.' },
-  { id: 4, title: 'vật lý lượng tử dành cho bé', author: 'tChris Ferrie', price: 80000, type: 'ebook', cover: 'anh/24.png', pdf: 'ebooks/kid4.pdf', description: 'Câu chuyện về cậu bé không bao giờ muốn lớn và xứ Neverland.' },
-  { id: 5, title: 'Dế Mèn Phiêu Lưu Ký', author: 'Tô Hoài', price: 75000, type: 'ebook', cover: 'anh/25.png', pdf: 'ebooks/kid5.pdf', description: 'Tác phẩm thiếu nhi kinh điển Việt Nam, hành trình phiêu lưu đầy ý nghĩa.' },
-  { id: 6, title: 'Không Gia Đình', author: 'Hector Malot', price: 95000, type: 'ebook', cover: 'anh/26.png', pdf: 'ebooks/kid6.pdf', description: 'Hành trình gian nan nhưng cảm động của cậu bé Rémi.' },
-  { id: 7, title: 'Bé Hạt Tiêu', author: 'Astrid Lindgren', price: 70000, type: 'ebook', cover: 'anh/27.png', pdf: 'ebooks/kid7.pdf', description: 'Câu chuyện dễ thương và hài hước về cô bé nhỏ bé nhưng đầy nghị lực.' },
-  { id: 8, title: 'Những Tấm Lòng Cao Cả', author: 'Edmondo De Amicis', price: 85000, type: 'ebook', cover: 'anh/28.png', pdf: 'ebooks/kid8.pdf', description: 'Tập hợp những câu chuyện cảm động về tình bạn, gia đình và lòng nhân ái.' },
-  { id: 9, title: 'Hoàng Tử Rừng Xanh', author: 'Rudyard Kipling', price: 90000, type: 'ebook', cover: 'anh/29.png', pdf: 'ebooks/kid9.pdf', description: 'Cậu bé Mowgli lớn lên giữa rừng già cùng muôn thú.' },
-  { id: 10, title: 'Chú Bé Rắc Rối Dennis', author: 'Hank Ketcham', price: 65000, type: 'ebook', cover: 'anh/30.png', pdf: 'ebooks/kid10.pdf', description: 'Những tình huống hài hước và rắc rối của cậu bé Dennis.' }
-];
+      { id: 1, title: 'Hoàng Tử Bé', author: 'Antoine de Saint-Exupéry', price: 85000, type: 'ebook', cover: 'anh/21.png', pdf: 'ebooks/kid1.pdf', description: 'Câu chuyện cổ điển về tình bạn, tình yêu và cái nhìn trẻ thơ.' },
+      { id: 2, title: 'Alice Ở Xứ Sở Thần Tiên', author: 'Lewis Carroll', price: 90000, type: 'ebook', cover: 'anh/22.png', pdf: 'ebooks/kid2.pdf', description: 'Hành trình kỳ ảo của Alice khi rơi vào thế giới thần tiên.' },
+      { id: 3, title: 'Harry Potter Và Hòn Đá Phù Thủy', author: 'J.K. Rowling', price: 120000, type: 'ebook', cover: 'anh/23.png', pdf: 'ebooks/kid3.pdf', description: 'Cuốn đầu tiên trong series Harry Potter nổi tiếng toàn cầu.' },
+      { id: 4, title: 'vật lý lượng tử dành cho bé', author: 'tChris Ferrie', price: 80000, type: 'ebook', cover: 'anh/24.png', pdf: 'ebooks/kid4.pdf', description: 'Câu chuyện về cậu bé không bao giờ muốn lớn và xứ Neverland.' },
+      { id: 5, title: 'Dế Mèn Phiêu Lưu Ký', author: 'Tô Hoài', price: 75000, type: 'ebook', cover: 'anh/25.png', pdf: 'ebooks/kid5.pdf', description: 'Tác phẩm thiếu nhi kinh điển Việt Nam, hành trình phiêu lưu đầy ý nghĩa.' },
+      { id: 6, title: 'Không Gia Đình', author: 'Hector Malot', price: 95000, type: 'ebook', cover: 'anh/26.png', pdf: 'ebooks/kid6.pdf', description: 'Hành trình gian nan nhưng cảm động của cậu bé Rémi.' },
+      { id: 7, title: 'Bé Hạt Tiêu', author: 'Astrid Lindgren', price: 70000, type: 'ebook', cover: 'anh/27.png', pdf: 'ebooks/kid7.pdf', description: 'Câu chuyện dễ thương và hài hước về cô bé nhỏ bé nhưng đầy nghị lực.' },
+      { id: 8, title: 'Những Tấm Lòng Cao Cả', author: 'Edmondo De Amicis', price: 85000, type: 'ebook', cover: 'anh/28.png', pdf: 'ebooks/kid8.pdf', description: 'Tập hợp những câu chuyện cảm động về tình bạn, gia đình và lòng nhân ái.' },
+      { id: 9, title: 'Hoàng Tử Rừng Xanh', author: 'Rudyard Kipling', price: 90000, type: 'ebook', cover: 'anh/29.png', pdf: 'ebooks/kid9.pdf', description: 'Cậu bé Mowgli lớn lên giữa rừng già cùng muôn thú.' },
+      { id: 10, title: 'Chú Bé Rắc Rối Dennis', author: 'Hank Ketcham', price: 65000, type: 'ebook', cover: 'anh/30.png', pdf: 'ebooks/kid10.pdf', description: 'Những tình huống hài hước và rắc rối của cậu bé Dennis.' }
+    ];
 
 
     // Helpers
@@ -126,14 +134,16 @@
               <div class="price">${money(b.price)}</div>
               <span class="tag">${b.type.toUpperCase()}</span>
             </div>
-            <div class="row" style="margin-top:10px;">
-              <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
-              <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
-            </div>
+            <div class="product-actions">
+        <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+        <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
+      </div>
           </div>
         `).join('')}</div>`;
       setActive('#/home');
     }
+
+
 
     function renderDetail(id) {
       const view = $('#view');
@@ -255,12 +265,56 @@
     updateCartCount();
     router();
 
+    // Search
+    function searchBooks() {
+      const keyword = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+      const view = document.getElementById('view');
+      if (!keyword) { renderHome(); return; }
+
+      const results = BOOKS.filter(b =>
+        b.title.toLowerCase().includes(keyword) ||
+        b.author.toLowerCase().includes(keyword)
+      );
+
+      if (results.length === 0) {
+        view.innerHTML = `<div class="panel empty">Không tìm thấy sách nào với từ khóa "${keyword}".</div>`;
+        return;
+      }
+
+      view.innerHTML = `<div style="margin-bottom:12px;"><h2>Kết quả tìm kiếm (${results.length})</h2></div>
+          <div class="grid">
+            ${results.map(b => `
+              <div class="card">
+                <img src="${b.cover}" alt="${b.title}">
+                <div class="title">${b.title}</div>
+                <div class="muted">${b.author}</div>
+                <div class="row" style="justify-content:space-between; margin-top:6px;">
+                  <div class="price">${money(b.price)}</div>
+                  <span class="tag">${b.type.toUpperCase()}</span>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                  <button class="btn" onclick="addToCart(${b.id})">Thêm vào giỏ</button>
+                  <a class="btn secondary" href="#/detail/${b.id}">Xem chi tiết</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+    }
   </script>
   <!-- Import JS tách riêng -->
   <script src="js/books.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/app.js"></script>
 
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+  </script>
 </body>
 
 </html>
